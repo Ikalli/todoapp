@@ -10,16 +10,45 @@ export default function Todo() {
   
   return(
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setIsCompleted(!isCompleted)}>
-        <View
-          style={[
-            styles.circle,
-            isCompleted ? styles.completedCircle : styles.uncompletedCircle
-          ]}
-        />
-      </TouchableOpacity>
+      <View style={styles.column}>
+        <TouchableOpacity onPress={() => setIsCompleted(!isCompleted)}>
+          <View
+            style={[
+              styles.circle,
+              isCompleted ? styles.completedCircle : styles.uncompletedCircle
+            ]}
+          />
+        </TouchableOpacity>
+        <Text style={[
+          styles.text,
+          isCompleted ? styles.completedText : styles.uncompletedText 
+        ]}>
+          Hello I'm todo
+        </Text>
+      </View>
 
-      <Text style={styles.text}>Hello I'm todo</Text>
+      {isEditing ? (
+        <View style={styles.actions}>
+          <TouchableOpacity onPressOut={() => setIsEditing(!isEditing)}>
+            <View style={styles.actionContainer}>
+              <Text style={styles.actionText}>✔️</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.actions}>
+          <TouchableOpacity onPressOut={() => setIsEditing(!isEditing)}>
+            <View style={styles.actionContainer}>
+              <Text style={styles.actionText}>✏️</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.actionContainer}>
+              <Text style={styles.actionText}>❌</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -31,6 +60,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   circle: {
@@ -49,9 +79,35 @@ const styles = StyleSheet.create({
     borderColor: '#f23657'
   },
 
+  completedText: {
+    color: '#bbb',
+    textDecorationLine: 'line-through',
+  },
+
+  uncompletedText: {
+    color: '#353535',
+  },
+
   text: {
     fontWeight: '600',
     fontSize: 20,
     marginVertical: 20
+  },
+
+  column: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: width/2,
+    justifyContent: 'space-between'
+  },
+
+  actions: {
+    flexDirection: 'row',
+  },
+
+  actionContainer: {
+    marginVertical: 10,
+    marginHorizontal: 10,
+
   }
 })
