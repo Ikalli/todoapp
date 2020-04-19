@@ -20,7 +20,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle='light-content' />
-      <Text style={styles.title}>To Do List</Text>
+      <Text style={styles.title}>할 일 목록</Text>
       <View style={styles.card}>
         <TextInput
           style={styles.input}
@@ -32,7 +32,7 @@ export default function App() {
           autoCorrect={false}
         />
         <ScrollView contentContainerStyle={styles.toDos}>
-          <Todo />
+          <Todo text={"Hello I'm Todo"}/>
         </ScrollView>
       </View>
     </View>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 
   input: {
     padding: 20,
-    borderBottomColor: 'bbb',
+    borderBottomColor: '#bbb',
     borderBottomWidth: 1,
     fontSize: 25
   },

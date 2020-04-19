@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
-export default function Todo() {
+export default function Todo({ text }) {
 
   const [ isEditing, setIsEditing ] = useState(false);
   const [ isCompleted, setIsCompleted ] = useState(false);
+  const [ todoValue, setTodoValue ] = useState('');
+
+  const startEditing = () => {
+    setIsEditing(true);
+    setTodoValue(text);
+  };
+
+  const finishEditing = () => {
+    setIsEditing(false);
+  };
   
   return(
     <View style={styles.container}>
@@ -19,17 +29,34 @@ export default function Todo() {
             ]}
           />
         </TouchableOpacity>
-        <Text style={[
-          styles.text,
-          isCompleted ? styles.completedText : styles.uncompletedText 
-        ]}>
-          Hello I'm todo
-        </Text>
+        {isEditing ? (
+          <TextInput
+            style={[
+              styles.input,
+              styles.text,
+              isCompleted ? styles.completedText : styles.uncompletedText
+            ]}
+            value={todoValue}
+            multiline={true}
+            onChangeText={(todo) => setTodoValue(todo)}
+            returnKeyType={'done'}
+            onBlur={finishEditing}
+          />
+        ) : (
+          <Text
+            style={[
+              styles.text,
+              isCompleted ? styles.completedText : styles.uncompletedText
+            ]}
+          >
+            {text}
+          </Text>
+        )}
       </View>
 
       {isEditing ? (
         <View style={styles.actions}>
-          <TouchableOpacity onPressOut={() => setIsEditing(!isEditing)}>
+          <TouchableOpacity onPressOut={finishEditing}>
             <View style={styles.actionContainer}>
               <Text style={styles.actionText}>✔️</Text>
             </View>
@@ -37,7 +64,7 @@ export default function Todo() {
         </View>
       ) : (
         <View style={styles.actions}>
-          <TouchableOpacity onPressOut={() => setIsEditing(!isEditing)}>
+          <TouchableOpacity onPressOut={startEditing}>
             <View style={styles.actionContainer}>
               <Text style={styles.actionText}>✏️</Text>
             </View>
@@ -89,6 +116,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
+    marginLeft: 10,
     fontWeight: '600',
     fontSize: 20,
     marginVertical: 20
@@ -98,7 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: width/2,
-    justifyContent: 'space-between'
   },
 
   actions: {
@@ -109,5 +136,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 10,
 
+  },
+
+  input: {
+    marginVertical: 10,
+    width: width/2,
   }
 })
