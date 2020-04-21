@@ -11,17 +11,48 @@ import {
 } from 'react-native';
 import { AppLoading } from 'expo';
 import Todo from './Todo';
+import uuidv1 from 'uuid/v1';
 
 const { height, width } = Dimensions.get('window');
 
 export default function App() {
 
-  const [ todo, setTodo ] = useState('');
+  const [ newTodo, setNewTodo ] = useState('');
+  const [ todos, setTodos ] = useState('');
   const [ loaderTodos, setLoaderTodos ] = useState(false);
+
+  useEffect(() => {
+    setLoaderTodos(true);
+  });
 
   if(!loaderTodos){
     return <AppLoading />
-  }
+  };
+
+  const addTodo = () => {
+    if(newTodo !== '') {
+      setTodos(prevTodos => {
+        const ID = uuidv1();
+        const newTodoObject = {
+          [ID]: {
+            id: ID,
+            isCompleted: false,
+            text: newTodo,
+            createdAt: Date.now()
+          },
+        };
+        const updatetodos = {
+          ...prevTodos,
+          toDos: {
+            ...prevTodos.toDos,
+            ...newTodoObject
+          }
+        };
+        return { ...updatetodos };
+      });
+    };
+    setNewTodo('');
+  };
 
   return (
     <View style={styles.container}>
@@ -31,11 +62,12 @@ export default function App() {
         <TextInput
           style={styles.input}
           placeholder={'New To Do'}
-          value={todo}
-          onChangeText={(text) => setTodo(text)}
+          value={newTodo}
+          onChangeText={(text) => setNewTodo(text)}
           placeholderTextColor={'#999'}
           returnKeyType={'done'}
           autoCorrect={false}
+          onSubmitEditing={addTodo}
         />
         <ScrollView contentContainerStyle={styles.toDos}>
           <Todo text={"Hello I'm Todo"}/>
