@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,13 +9,19 @@ import {
   Platform,
   ScrollView
 } from 'react-native';
+import { AppLoading } from 'expo';
 import Todo from './Todo';
 
 const { height, width } = Dimensions.get('window');
 
 export default function App() {
 
-  const [todo, setTodo] = useState('');
+  const [ todo, setTodo ] = useState('');
+  const [ loaderTodos, setLoaderTodos ] = useState(false);
+
+  if(!loaderTodos){
+    return <AppLoading />
+  }
 
   return (
     <View style={styles.container}>
