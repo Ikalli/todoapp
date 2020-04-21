@@ -13,12 +13,12 @@ import { AppLoading } from 'expo';
 import Todo from './Todo';
 import uuidv1 from 'uuid/v1';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default function App() {
 
   const [ newTodo, setNewTodo ] = useState('');
-  const [ todos, setTodos ] = useState('');
+  const [ todos, setTodos ] = useState({});
   const [ loaderTodos, setLoaderTodos ] = useState(false);
 
   useEffect(() => {
@@ -28,6 +28,8 @@ export default function App() {
   if(!loaderTodos){
     return <AppLoading />
   };
+
+  //console.log(todos);
 
   const addTodo = () => {
     if(newTodo !== '') {
@@ -43,8 +45,8 @@ export default function App() {
         };
         const updatetodos = {
           ...prevTodos,
-          toDos: {
-            ...prevTodos.toDos,
+          todos: {
+            ...prevTodos.todos,
             ...newTodoObject
           }
         };
@@ -70,7 +72,7 @@ export default function App() {
           onSubmitEditing={addTodo}
         />
         <ScrollView contentContainerStyle={styles.toDos}>
-          <Todo text={"Hello I'm Todo"}/>
+          {Object.values(todos).map(todo => <Todo key={todo.id} {...todo} />)}
         </ScrollView>
       </View>
     </View>
