@@ -45,10 +45,7 @@ export default function App() {
         };
         const updatetodos = {
           ...prevTodos,
-          todos: {
-            ...prevTodos.todos,
-            ...newTodoObject
-          }
+          ...newTodoObject
         };
         return { ...updatetodos };
       });

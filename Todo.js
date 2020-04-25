@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get('window');
 
 export default function Todo({ text }) {
 
-  console.log(text);
+  //console.log(text);
 
   const [ isEditing, setIsEditing ] = useState(false);
   const [ isCompleted, setIsCompleted ] = useState(false);
