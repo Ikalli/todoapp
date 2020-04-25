@@ -3,13 +3,16 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 
 
 const { width, height } = Dimensions.get('window');
 
-export default function Todo({ text, id, deleteTodo }) {
+export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, uncompleteTodo }) {
 
   //console.log(text);
 
   const [ isEditing, setIsEditing ] = useState(false);
-  const [ isCompleted, setIsCompleted ] = useState(false);
   const [ todoValue, setTodoValue ] = useState('');
+
+  const toggleComplete = () => {
+    isCompleted ? uncompleteTodo(id) : completeTodo(id);
+  }
 
   const startEditing = () => {
     setIsEditing(true);
@@ -23,7 +26,7 @@ export default function Todo({ text, id, deleteTodo }) {
   return(
     <View style={styles.container}>
       <View style={styles.column}>
-        <TouchableOpacity onPress={() => setIsCompleted(!isCompleted)}>
+        <TouchableOpacity onPress={() => toggleComplete()}>
           <View
             style={[
               styles.circle,

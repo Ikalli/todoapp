@@ -53,6 +53,14 @@ export default function App() {
     setTodos({ ...todos });
   }
 
+  const uncompletedTodo = id => {
+    setTodos({ ...todos, [id]: { ...todos[id], isCompleted: false }});
+  };
+
+  const completedTodo = id => {
+    setTodos({ ...todos, [id]: { ...todos[id], isCompleted: true }});
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle='light-content' />
@@ -71,8 +79,11 @@ export default function App() {
         <ScrollView contentContainerStyle={styles.toDos}>
           {Object.values(todos).map(todo => (
             <Todo
-              key={todo.id} {...todo}
+              key={todo.id}
               deleteTodo={deleteTodo}
+              completeTodo={completedTodo}
+              uncompleteTodo={uncompletedTodo}
+              {...todo}
             />
           ))}
         </ScrollView>
