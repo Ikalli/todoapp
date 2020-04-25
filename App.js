@@ -12,6 +12,7 @@ import {
 import { AppLoading } from 'expo';
 import Todo from './Todo';
 import uuidv1 from 'uuid/v1';
+import PropTypes from 'prop-types';
 
 const { width } = Dimensions.get('window');
 
@@ -33,25 +34,24 @@ export default function App() {
 
   const addTodo = () => {
     if(newTodo !== '') {
-      setTodos(prevTodos => {
-        const ID = uuidv1();
-        const newTodoObject = {
-          [ID]: {
-            id: ID,
-            isCompleted: false,
-            text: newTodo,
-            createdAt: Date.now()
-          },
-        };
-        const updatetodos = {
-          ...prevTodos,
-          ...newTodoObject
-        };
-        return { ...updatetodos };
-      });
-    };
-    setNewTodo('');
+      const ID = uuidv1();
+      const newTodoObject = {
+        [ID]: {
+          id: ID,
+          isCompleted: false,
+          text: newTodo,
+          createdAt: Date.now()
+        }
+      };
+      setTodos({ ...todos, ...newTodoObject });
+      setNewTodo("");
+    }
   };
+
+  const deleteTodo = (id) => {
+    delete todos[id];
+    setTodos({ ...todos });
+  }
 
   return (
     <View style={styles.container}>
@@ -69,7 +69,12 @@ export default function App() {
           onSubmitEditing={addTodo}
         />
         <ScrollView contentContainerStyle={styles.toDos}>
-          {Object.values(todos).map(todo => <Todo key={todo.id} {...todo} />)}
+          {Object.values(todos).map(todo => (
+            <Todo
+              key={todo.id} {...todo}
+              deleteTodo={deleteTodo}
+            />
+          ))}
         </ScrollView>
       </View>
     </View>

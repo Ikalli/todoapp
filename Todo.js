@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 
 
 const { width, height } = Dimensions.get('window');
 
-export default function Todo({ text }) {
+export default function Todo({ text, id, deleteTodo }) {
 
   //console.log(text);
 
@@ -71,7 +71,7 @@ export default function Todo({ text }) {
               <Text style={styles.actionText}>✏️</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPressOut={() => deleteTodo(id)}>
             <View style={styles.actionContainer}>
               <Text style={styles.actionText}>❌</Text>
             </View>
