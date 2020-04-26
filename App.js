@@ -53,13 +53,17 @@ export default function App() {
     setTodos({ ...todos });
   }
 
-  const uncompletedTodo = id => {
+  const uncompletedTodo = (id) => {
     setTodos({ ...todos, [id]: { ...todos[id], isCompleted: false }});
   };
 
-  const completedTodo = id => {
+  const completedTodo = (id) => {
     setTodos({ ...todos, [id]: { ...todos[id], isCompleted: true }});
   };
+
+  const updateTodo = (id, text) => {
+    setTodos({ ...todos, [id]: { ...todos[id], text: text}})
+  }
 
   return (
     <View style={styles.container}>
@@ -83,6 +87,7 @@ export default function App() {
               deleteTodo={deleteTodo}
               completeTodo={completedTodo}
               uncompleteTodo={uncompletedTodo}
+              updateTodo={updateTodo}
               {...todo}
             />
           ))}

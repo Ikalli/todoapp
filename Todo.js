@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, TextInput } from 
 
 const { width, height } = Dimensions.get('window');
 
-export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, uncompleteTodo }) {
+export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, uncompleteTodo, updateTodo }) {
 
   //console.log(text);
 
@@ -20,6 +20,7 @@ export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, 
   };
 
   const finishEditing = () => {
+    updateTodo(id, todoValue);
     setIsEditing(false);
   };
   
