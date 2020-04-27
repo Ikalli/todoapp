@@ -20,13 +20,13 @@ export default function App() {
 
   const [ newTodo, setNewTodo ] = useState('');
   const [ todos, setTodos ] = useState({});
-  const [ loaderTodos, setLoaderTodos ] = useState(false);
+  const [ loadedTodos, setLoadedTodos ] = useState(false);
 
   useEffect(() => {
-    setLoaderTodos(true);
+    setLoadedTodos(true);
   });
 
-  if(!loaderTodos){
+  if(!loadedTodos){
     return <AppLoading />
   };
 
