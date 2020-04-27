@@ -10,6 +10,7 @@ import {
   ScrollView
 } from 'react-native';
 import { AppLoading } from 'expo';
+import AsyncStorage from '@react-native-community/async-storage';
 import Todo from './Todo';
 import uuidv1 from 'uuid/v1';
 import PropTypes from 'prop-types';
@@ -29,8 +30,6 @@ export default function App() {
   if(!loadedTodos){
     return <AppLoading />
   };
-
-  //console.log(todos);
 
   const addTodo = () => {
     if(newTodo !== '') {
