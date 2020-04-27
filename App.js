@@ -20,12 +20,12 @@ const { width } = Dimensions.get('window');
 export default function App() {
 
   const [ newTodo, setNewTodo ] = useState('');
-  const [ todos, setTodos ] = useState({});
+  const [ todos, setTodos ] = useState({ 1: { id: 1, isCompleted: false, text: 'Hello World!' }});
   const [ loadedTodo, setLoadedTodo ] = useState(false);
 
   useEffect(() => {
     loadTodo();
-  }, [todos]);
+  }, {todos});
 
   const addTodo = () => {
     if(newTodo !== '') {
@@ -35,7 +35,6 @@ export default function App() {
           id: ID,
           isCompleted: false,
           text: newTodo,
-          createdAt: Date.now()
         }
       };
       setTodos({ ...todos, ...newTodoObject });
@@ -85,9 +84,11 @@ export default function App() {
     }
   }
 
+  /*
   if(!loadedTodo) {
-    return <AppLoading />;
+    return <AppLoading />
   }
+  */
 
   return (
     <View style={styles.container}>
