@@ -40,32 +40,34 @@ export default function App() {
       setTodos({ ...todos, ...newTodoObject });
       setNewTodo("");
     }
-    saveTodo(todos);
+    //This is the problem...
+    saveTodo({ ...todos })
   };
 
   const deleteTodo = (id) => {
     delete todos[id];
     setTodos({ ...todos });
-    saveTodo(todos);
+    saveTodo({ ...todos });
   }
 
   const uncompletedTodo = (id) => {
     setTodos({ ...todos, [id]: { ...todos[id], isCompleted: false }});
-    saveTodo(todos);
+    saveTodo({ ...todos, [id]: { ...todos[id], isCompleted: false }});
   };
 
   const completedTodo = (id) => {
     setTodos({ ...todos, [id]: { ...todos[id], isCompleted: true }});
-    saveTodo(todos);
+    saveTodo({ ...todos, [id]: { ...todos[id], isCompleted: true }});
   };
 
   const updateTodo = (id, text) => {
-    setTodos({ ...todos, [id]: { ...todos[id], text: text}})
-    saveTodo(todos);
+    setTodos({ ...todos, [id]: { ...todos[id], text: text}});
+    saveTodo({ ...todos, [id]: { ...todos[id], text: text}});
   }
 
   const saveTodo = async (newTodo) => {
     try {
+      console.log(newTodo);
       await AsyncStorage.setItem('todos', JSON.stringify(newTodo));
     } catch(e) {
       alert(e);
@@ -75,7 +77,6 @@ export default function App() {
   const loadTodo = async () => {
     try{
       const _todos = await AsyncStorage.getItem('todos');
-      console.log(_todos);
       const parsedTodos = JSON.parse(_todos);
       setTodos({ ...parsedTodos });
       setLoadedTodo(true);
