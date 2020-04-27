@@ -21,15 +21,10 @@ export default function App() {
 
   const [ newTodo, setNewTodo ] = useState('');
   const [ todos, setTodos ] = useState({});
-  const [ loadedTodos, setLoadedTodos ] = useState(false);
 
   useEffect(() => {
-    setLoadedTodos(true);
+    loadTodo();
   });
-
-  if(!loadedTodos){
-    return <AppLoading />
-  };
 
   const addTodo = () => {
     if(newTodo !== '') {
@@ -77,6 +72,16 @@ export default function App() {
     }
   }
 
+  const loadTodo = async () => {
+    try{
+      const _todos = await AsyncStorage.getItem('todos');
+      const parsedTodos = JSON.parse(_todos);
+      setTodos({ ...parsedTodos });
+    } catch(err) {
+      alert(err);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle='light-content' />
@@ -93,7 +98,7 @@ export default function App() {
           onSubmitEditing={addTodo}
         />
         <ScrollView contentContainerStyle={styles.toDos}>
-          {Object.values(todos).map(todo => (
+          {Object.values(todos).reverse().map(todo => (
             <Todo
               key={todo.id}
               deleteTodo={deleteTodo}
