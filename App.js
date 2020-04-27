@@ -21,6 +21,7 @@ export default function App() {
 
   const [ newTodo, setNewTodo ] = useState('');
   const [ todos, setTodos ] = useState({});
+  const [ loadedTodo, setLoadedTodo ] = useState(false);
 
   useEffect(() => {
     loadTodo();
@@ -75,11 +76,17 @@ export default function App() {
   const loadTodo = async () => {
     try{
       const _todos = await AsyncStorage.getItem('todos');
+      console.log(_todos);
       const parsedTodos = JSON.parse(_todos);
       setTodos({ ...parsedTodos });
-    } catch(err) {
-      alert(err);
+      setLoadedTodo(true);
+    } catch(e) {
+      alert(e);
     }
+  }
+
+  if(!loadedTodo) {
+    return <AppLoading />;
   }
 
   return (
