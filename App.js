@@ -45,23 +45,36 @@ export default function App() {
       setTodos({ ...todos, ...newTodoObject });
       setNewTodo("");
     }
+    saveTodo(todos);
   };
 
   const deleteTodo = (id) => {
     delete todos[id];
     setTodos({ ...todos });
+    saveTodo(todos);
   }
 
   const uncompletedTodo = (id) => {
     setTodos({ ...todos, [id]: { ...todos[id], isCompleted: false }});
+    saveTodo(todos);
   };
 
   const completedTodo = (id) => {
     setTodos({ ...todos, [id]: { ...todos[id], isCompleted: true }});
+    saveTodo(todos);
   };
 
   const updateTodo = (id, text) => {
     setTodos({ ...todos, [id]: { ...todos[id], text: text}})
+    saveTodo(todos);
+  }
+
+  const saveTodo = async (newTodo) => {
+    try {
+      await AsyncStorage.setItem('todos', JSON.stringify(newTodo));
+    } catch(e) {
+      alert(e);
+    }
   }
 
   return (
