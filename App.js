@@ -25,7 +25,7 @@ export default function App() {
 
   useEffect(() => {
     loadTodo();
-  });
+  }, [todos]);
 
   const addTodo = () => {
     if(newTodo !== '') {
