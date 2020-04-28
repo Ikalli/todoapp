@@ -20,7 +20,7 @@ const { width } = Dimensions.get('window');
 export default function App() {
 
   const [ newTodo, setNewTodo ] = useState('');
-  const [ todos, setTodos ] = useState({ 1: { id: 1, isCompleted: false, text: 'Hello World!' }});
+  const [ todos, setTodos ] = useState({});
   const [ loadedTodo, setLoadedTodo ] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,6 @@ export default function App() {
       setNewTodo("");
       saveTodo({ ... todos, ...newTodoObject });
     }
-    //This is the problem...
   };
 
   const deleteTodo = (id) => {
@@ -67,7 +66,6 @@ export default function App() {
 
   const saveTodo = async (newTodo) => {
     try {
-      console.log(newTodo);
       await AsyncStorage.setItem('todos', JSON.stringify(newTodo));
     } catch(e) {
       alert(e);
@@ -85,11 +83,9 @@ export default function App() {
     }
   }
 
-  /*
   if(!loadedTodo) {
     return <AppLoading />
   }
-  */
 
   return (
     <View style={styles.container}>
