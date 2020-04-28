@@ -77,7 +77,7 @@ export default function App() {
       const _todos = await AsyncStorage.getItem('todos');
       console.log(_todos);
       const parsedTodos = JSON.parse(_todos);
-      setTodos({ ...parsedTodos });
+      setTodos({ ...parsedTodos } || {});
       setLoadedTodo(true);
     } catch(e) {
       alert(e);
@@ -102,6 +102,7 @@ export default function App() {
           returnKeyType={'done'}
           autoCorrect={false}
           onSubmitEditing={addTodo}
+          underlineColorAndroid={"transparent"}
         />
         <ScrollView contentContainerStyle={styles.toDos}>
           {Object.values(todos).reverse().map(todo => (

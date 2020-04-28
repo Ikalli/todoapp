@@ -49,6 +49,7 @@ export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, 
             onChangeText={(todo) => setTodoValue(todo)}
             returnKeyType={'done'}
             onBlur={finishEditing}
+            underlineColorAndroid={"transparent"}
           />
         ) : (
           <Text
