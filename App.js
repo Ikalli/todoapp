@@ -39,9 +39,9 @@ export default function App() {
       };
       setTodos({ ...todos, ...newTodoObject });
       setNewTodo("");
+      saveTodo({ ... todos, ...newTodoObject });
     }
     //This is the problem...
-    saveTodo({ ...todos })
   };
 
   const deleteTodo = (id) => {
