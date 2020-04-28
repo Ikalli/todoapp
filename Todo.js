@@ -14,12 +14,14 @@ export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, 
     isCompleted ? uncompleteTodo(id) : completeTodo(id);
   }
 
-  const startEditing = () => {
+  const startEditing = (event) => {
+    event.stopPropagation();
     setIsEditing(true);
     setTodoValue(text);
   };
 
-  const finishEditing = () => {
+  const finishEditing = (event) => {
+    event.stopPropagation();
     updateTodo(id, todoValue);
     setIsEditing(false);
   };
@@ -75,7 +77,10 @@ export default function Todo({ text, id, deleteTodo, isCompleted, completeTodo, 
               <Text style={styles.actionText}>✏️</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPressOut={() => deleteTodo(id)}>
+          <TouchableOpacity onPressOut={(event) => {
+            event.stopPropagation();
+            deleteTodo(id)}}
+          >
             <View style={styles.actionContainer}>
               <Text style={styles.actionText}>❌</Text>
             </View>
